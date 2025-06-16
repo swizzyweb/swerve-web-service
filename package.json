@@ -16,7 +16,7 @@
   ],
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@swizzyweb/swerve": "file:../swerve",
+    "@swizzyweb/swerve": "^0.4.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
