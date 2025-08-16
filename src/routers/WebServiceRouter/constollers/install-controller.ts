@@ -10,12 +10,15 @@ import {
   WebControllerFunction,
   WebService,
 } from "@swizzyweb/swizzy-web-service";
-import { WebServiceRouter, WebServiceRouterState } from "../web-service-router";
+import {
+  WebServiceRouter,
+  WebServiceRouterState,
+} from "../web-service-router.js";
 
 // @ts-ignore
 import { Request, Response, NextFunction } from "@swizzyweb/express";
-import { INpmInstaller, SaveOption } from "../../../npm-installer";
-import { ISwerveManager } from "@swizzyweb/swerve";
+import { INpmInstaller, SaveOption } from "../../../npm-installer.js";
+import { ISwerveManager } from "@swizzyweb/swerve-manager";
 
 export interface InstallControllerState {
   swerveManager: ISwerveManager;

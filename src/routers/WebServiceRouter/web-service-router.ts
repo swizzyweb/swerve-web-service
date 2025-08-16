@@ -4,13 +4,13 @@ import {
   StateConverterProps,
   WebRouter,
 } from "@swizzyweb/swizzy-web-service";
-import { DynSwerveWebServiceState } from "../../web-service";
-import { ISwerveManager } from "@swizzyweb/swerve";
-import { INpmInstaller } from "../../npm-installer";
-import { InstallController } from "./constollers/install-controller";
-import { RunController } from "./constollers/run-controller";
-import { StopController } from "./constollers/stop-controller";
-import { GetAllWebServicesController } from "./constollers/get-all-web-services";
+import { DynSwerveWebServiceState } from "../../web-service.js";
+import { ISwerveManager } from "@swizzyweb/swerve-manager";
+import { INpmInstaller } from "../../npm-installer.js";
+import { InstallController } from "./constollers/install-controller.js";
+import { RunController } from "./constollers/run-controller.js";
+import { StopController } from "./constollers/stop-controller.js";
+import { GetAllWebServicesController } from "./constollers/get-all-web-services.js";
 
 export interface WebServiceRouterState {
   swerveManager: ISwerveManager;

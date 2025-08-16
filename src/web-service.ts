@@ -5,9 +5,9 @@ import {
   SwizzyRequestMiddleware,
   WebService,
 } from "@swizzyweb/swizzy-web-service";
-import { ISwerveManager } from "@swizzyweb/swerve";
-import { INpmInstaller } from "./npm-installer";
-import { WebServiceRouter } from "./routers/WebServiceRouter/web-service-router";
+import { ISwerveManager } from "@swizzyweb/swerve-manager";
+import { INpmInstaller } from "./npm-installer.js";
+import { WebServiceRouter } from "./routers/WebServiceRouter/web-service-router.js";
 
 export interface DynSwerveWebServiceState {
   swerveManager: ISwerveManager;

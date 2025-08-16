@@ -1,6 +1,6 @@
-import { SwerveManager } from "@swizzyweb/swerve";
-import { NpmInstaller } from "./npm-installer";
-import { DynSwerveWebService } from "./web-service";
+import { SwerveManager } from "@swizzyweb/swerve-manager";
+import { NpmInstaller } from "./npm-installer.js";
+import { DynSwerveWebService } from "./web-service.js";
 import { WebService } from "@swizzyweb/swizzy-web-service";
 // @ts-ignore
 import { Application } from "@swizzyweb/express";
