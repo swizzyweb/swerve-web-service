@@ -8,11 +8,14 @@ import {
 import { ISwerveManager } from "@swizzyweb/swerve-manager";
 import { INpmInstaller } from "./npm-installer.js";
 import { WebServiceRouter } from "./routers/WebServiceRouter/web-service-router.js";
+import { ISwerveRegistryClient } from "./client/swerve-registry-client.js";
 
 export interface DynSwerveWebServiceState {
   swerveManager: ISwerveManager;
   npmInstaller: INpmInstaller;
   appDataRoot: string;
+  nodeModulesPath: string;
+  //  registryClient: ISwerveRegistryClient;
 }
 
 export interface DynSwerveWebServiceProps

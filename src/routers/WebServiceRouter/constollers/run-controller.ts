@@ -13,7 +13,7 @@ import {
   WebServiceRouter,
   WebServiceRouterState,
 } from "../web-service-router.js";
-
+import path from "node:path";
 // @ts-ignore
 import { json, Request, Response, NextFunction } from "@swizzyweb/express";
 import {
@@ -27,6 +27,7 @@ export interface RunControllerState {
   swerveManager: ISwerveManager;
   npmInstaller: INpmInstaller;
   appDataRoot: string;
+  nodeModulesPath: string;
 }
 
 export interface RunControllerProps
@@ -63,7 +64,8 @@ export class RunController extends WebController<
       const { requestId } = req.swizzy;
       const { services, port, logLevel } = serviceConfig;
       try {
-        const { swerveManager, appDataRoot } = getState()!;
+        const { swerveManager, appDataRoot, nodeModulesPath } = getState()!;
+
         logger.info(
           `Installing webservices for requestId ${requestId} on port ${port}`,
         );
@@ -100,7 +102,7 @@ export class RunController extends WebController<
           `Error running webservice: ${requestId} on port ${port} with error ${e}`,
         );
         res.status(500);
-        res.send();
+        res.json({});
       }
     };
   }

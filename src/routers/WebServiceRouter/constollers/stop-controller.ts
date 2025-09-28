@@ -67,13 +67,13 @@ export class StopController extends WebController<
           `Stopped webservice instance ${instanceId} with instanceType ${instanceType}`,
         );
 
-        res.send();
+        res.json({});
       } catch (e) {
         logger.error(
           `Error stopping webservice instance: ${instanceId} with instanceType ${instanceType} with error ${e}`,
         );
         res.status(500);
-        res.send();
+        res.json({});
       }
     };
   }

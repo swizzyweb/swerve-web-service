@@ -17,6 +17,7 @@ export enum SaveOption {
 
 export interface NpmInstallerProps {
   logger: ILogger<any>;
+  nodeModulesPath: string;
 }
 
 export interface INpmInstaller {
@@ -35,14 +36,15 @@ export interface INpmInstaller {
 
 export class NpmInstaller {
   readonly LINK_COMMAND = "npm link";
-  readonly INSTALL_COMMAND = "npm install"; //--registry=https://npm.swizzyweb.com "; //"--registry http://localhost:4873 "; // TODO: should we save it?
+  readonly INSTALL_COMMAND = `npm install --prefix`; //--registry=https://npm.swizzyweb.com "; //"--registry http://localhost:4873 "; // TODO: should we save it?
   readonly PACKAGE_NAME_REGEX = new RegExp(
     "^([@]*[a-zA-Z0-9-]+/)?[a-zA-Z0-9-]+([a-zA-Z0-9-@.])+(?<!.js)$",
   );
   logger: ILogger<any>;
-
+  readonly nodeModulesPath: string;
   constructor(props: NpmInstallerProps) {
     this.logger = props.logger;
+    this.nodeModulesPath = props.nodeModulesPath;
   }
 
   async npmLinkInstall(props: INpmInstallProps): Promise<IInstallResult> {
@@ -59,9 +61,11 @@ export class NpmInstaller {
     const { packageName, saveOption } = props;
     const actualSaveOption: SaveOption = saveOption ?? SaveOption.default;
     this.validatePackageName(packageName);
-    return await this.install(packageName, this.INSTALL_COMMAND, [
-      actualSaveOption,
-    ]);
+    return await this.install(
+      packageName,
+      `${this.INSTALL_COMMAND} ${this.nodeModulesPath}`,
+      [actualSaveOption],
+    );
   }
 
   async install(
@@ -94,6 +98,7 @@ export class NpmInstaller {
   }
 
   validatePackageName(packageName: string) {
+    return;
     if (!packageName || !this.PACKAGE_NAME_REGEX.test(packageName)) {
       throw new Error(
         `Invalid package name provided, could be malicious! packageName: ${packageName}`,

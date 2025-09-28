@@ -2,3 +2,4 @@ dist
 bundle
 node_modules
 logs
+local_node_modules

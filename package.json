@@ -1,6 +1,6 @@
 {
   "name": "@swizzyweb/swerve-web-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Template for swizzyweb backend web services",
   "main": "dist/app.js",
   "type": "module",
@@ -17,15 +17,13 @@
   ],
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@swizzyweb/swerve": "^0.5.0",
+    "@swizzyweb/swerve": "^0.5.6",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "@swizzyweb/express": "^4.19.2",
-    "@swizzyweb/secscanner-web-service": "^0.2.1",
-    "@swizzyweb/swap-cache-db-web-service": "^0.6.0",
-    "@swizzyweb/swerve-manager": "^0.1.0",
-    "@swizzyweb/swizzy-common": "^0.2.7",
-    "@swizzyweb/swizzy-web-service": "^0.4.3"
+    "@swizzyweb/swerve-manager": "^0.1.7",
+    "@swizzyweb/swizzy-common": "^0.3.2",
+    "@swizzyweb/swizzy-web-service": "^0.5.4"
   }
 }
