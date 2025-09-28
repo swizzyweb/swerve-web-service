@@ -33,7 +33,6 @@ export function getWebservice(props: any) {
     props.serviceArgs.nodeModulesPath ??
       path.join(__dirname, "../local_node_modules/node_modules/"),
   );
-  console.log(nodeModulesPath);
 
   const webServices: WebService<any>[] = [];
   const swerveManager = new SwerveManager({
@@ -47,8 +46,6 @@ export function getWebservice(props: any) {
     nodeModulesPath: path.join(nodeModulesPath),
   });
 
-  //  const
-  //  registryClient: ISwerveRegistryClient;
   const state: DynSwerveWebServiceState = {
     swerveManager,
     npmInstaller,

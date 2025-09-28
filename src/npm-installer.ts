@@ -1,5 +1,9 @@
 import { exec } from "child_process";
 import { BrowserLogger, ILogger } from "@swizzyweb/swizzy-common";
+import path from "node:path";
+import { existsSync } from "node:fs";
+import { createRequire } from "node:module";
+import { randomUUID } from "node:crypto";
 
 const logger: ILogger<any> = new BrowserLogger();
 const SLEEP_INTERVAL = 500;
@@ -30,7 +34,7 @@ export interface INpmInstaller {
     command: string,
     installArgs?: string[],
   ): Promise<IInstallResult>;
-
+  isPackageInstalled(moduleName: string): Promise<boolean>;
   validatePackageName(packageName: string): void;
 }
 
@@ -74,21 +78,23 @@ export class NpmInstaller {
     installArgs?: string[],
   ): Promise<IInstallResult> {
     const installCommand = `${command} ${installArgs?.join(" ") ?? ""} ${packageName}`;
+    const logger = this.logger;
     logger.info(`Installing with command ${installCommand}`);
+
     let a = exec(installCommand, (err, stdout, stderr) => {
       if (err) {
-        this.logger.error(`Error: ${err}`);
+        logger.error(`Error: ${err}`);
       }
       if (stdout) {
-        this.logger.info(stdout);
+        logger.info(stdout);
       }
       if (stderr) {
-        this.logger.error(stderr);
+        logger.error(stderr);
       }
     });
 
     while (a.exitCode == null) {
-      this.logger.info(`Still running, waiting ${SLEEP_INTERVAL} ms`);
+      logger.info(`Still running, waiting ${SLEEP_INTERVAL} ms`);
       await sleep(SLEEP_INTERVAL);
     }
 
@@ -103,6 +109,21 @@ export class NpmInstaller {
       throw new Error(
         `Invalid package name provided, could be malicious! packageName: ${packageName}`,
       );
+    }
+  }
+
+  /**
+   * Checks if a Node.js module is available to be required.
+   * @param {string} moduleName The name of the module.
+   * @returns {Promise<boolean>} True if the module is available, otherwise false.
+   */
+  async isPackageInstalled(moduleName: string): Promise<boolean> {
+    try {
+      return existsSync(
+        path.join(this.nodeModulesPath, "node_modules", moduleName),
+      );
+    } catch {
+      return false;
     }
   }
 }

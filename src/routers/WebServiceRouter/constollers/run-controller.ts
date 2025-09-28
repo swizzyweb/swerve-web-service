@@ -19,6 +19,7 @@ import { json, Request, Response, NextFunction } from "@swizzyweb/express";
 import {
   IService,
   ISwerveManager,
+  SwerveConfigException,
   SwerveManager,
 } from "@swizzyweb/swerve-manager";
 import { INpmInstaller } from "../../../npm-installer.js";
@@ -64,7 +65,8 @@ export class RunController extends WebController<
       const { requestId } = req.swizzy;
       const { services, port, logLevel } = serviceConfig;
       try {
-        const { swerveManager, appDataRoot, nodeModulesPath } = getState()!;
+        const { swerveManager, appDataRoot, nodeModulesPath, npmInstaller } =
+          getState()!;
 
         logger.info(
           `Installing webservices for requestId ${requestId} on port ${port}`,
@@ -72,6 +74,15 @@ export class RunController extends WebController<
         logger.debug(
           `Installing for request ${requestId} with request ${JSON.stringify(req.body)} on port ${port}`,
         );
+
+        for (const [key, service] of Object.entries(services) as any) {
+          logger.info(`Key: ${key}, service ${service}`);
+          if (!(await npmInstaller.isPackageInstalled(service.packageName))) {
+            throw new SwerveConfigException(
+              `Package is not installed ${service.packageName}`,
+            );
+          }
+        }
 
         const { webServices } = await swerveManager.run({
           args: {
@@ -99,7 +110,7 @@ export class RunController extends WebController<
         res.json({ instances: instanceDetails });
       } catch (e) {
         logger.error(
-          `Error running webservice: ${requestId} on port ${port} with error ${e}`,
+          `Error running webservice: ${requestId} on port ${port} with error ${typeof e === "object" ? JSON.stringify(e) : e}`,
         );
         res.status(500);
         res.json({});
