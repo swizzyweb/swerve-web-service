@@ -1,9 +1,7 @@
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 import { BrowserLogger, ILogger } from "@swizzyweb/swizzy-common";
 import path from "node:path";
 import { existsSync } from "node:fs";
-import { createRequire } from "node:module";
-import { randomUUID } from "node:crypto";
 
 const logger: ILogger<any> = new BrowserLogger();
 const SLEEP_INTERVAL = 500;
