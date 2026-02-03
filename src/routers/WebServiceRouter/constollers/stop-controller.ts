@@ -15,7 +15,7 @@ import {
 } from "../web-service-router.js";
 
 // @ts-ignore
-import { Request, Response, NextFunction } from "@swizzyweb/express";
+import { Request, Response, NextFunction } from "express";
 import { ISwerveManager } from "@swizzyweb/swerve-manager";
 import { INpmInstaller } from "../../../npm-installer.js";
 

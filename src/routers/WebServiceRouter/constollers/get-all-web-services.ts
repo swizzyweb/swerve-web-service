@@ -7,9 +7,8 @@ import {
   WebControllerFunction,
 } from "@swizzyweb/swizzy-web-service";
 import { WebServiceRouterState } from "../web-service-router.js";
-
 // @ts-ignore
-import { json, Request, Response } from "@swizzyweb/express";
+import { json, Request, Response } from "express";
 import { ISwerveManager } from "@swizzyweb/swerve-manager";
 
 export interface GetAllWebServicesControllerState {
@@ -37,7 +36,7 @@ export class GetAllWebServicesController extends WebController<
       stateConverter: DefaultStateExporter,
       name: "GetAllWebServicesController",
 
-      middleware: [json],
+      middleware: [json as any],
     });
   }
 
@@ -63,7 +62,7 @@ export class GetAllWebServicesController extends WebController<
         });
       } catch (e: any) {
         logger.error(`Error installing webservice ${serviceName} with ${e})`);
-        res.staus(400);
+        res.status(400);
         res.send();
       }
     };

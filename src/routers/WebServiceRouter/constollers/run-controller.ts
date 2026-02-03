@@ -6,6 +6,7 @@ import {
   SwizzyMiddleware,
   SwizzyMiddlewareFunction,
   SwizzyMiddlewareProps,
+  SwizzyRequest,
   WebController,
   WebControllerFunction,
 } from "@swizzyweb/swizzy-web-service";
@@ -15,7 +16,7 @@ import {
 } from "../web-service-router.js";
 import path from "node:path";
 // @ts-ignore
-import { json, Request, Response, NextFunction } from "@swizzyweb/express";
+import { json, Request, Response, NextFunction } from "express";
 import {
   IService,
   ISwerveManager,
@@ -47,7 +48,7 @@ export class RunController extends WebController<
       stateConverter: DefaultStateExporter,
       name: "RunController",
 
-      middleware: [json, RunControllerMiddleware],
+      middleware: [json as any, RunControllerMiddleware],
     });
   }
 
@@ -59,7 +60,10 @@ export class RunController extends WebController<
     const getState = this.getState.bind(this);
     const logger = this.logger;
 
-    return async function RunControllerFunction(req: Request, res: Response) {
+    return async function RunControllerFunction(
+      req: Request & SwizzyRequest,
+      res: Response,
+    ) {
       //      const { serviceName, port } = req.query;
       const { serviceConfig } = req.body;
       const { requestId } = req.swizzy;

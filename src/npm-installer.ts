@@ -38,7 +38,7 @@ export interface INpmInstaller {
 
 export class NpmInstaller {
   readonly LINK_COMMAND = "npm link";
-  readonly INSTALL_COMMAND = `npm install --prefix`; //--registry=https://npm.swizzyweb.com "; //"--registry http://localhost:4873 "; // TODO: should we save it?
+  readonly INSTALL_COMMAND = `npm install --omit=dev --prefix `; //https://npm.swizzyweb.com"; //"--registry http://localhost:4873 "; // TODO: should we save it?
   readonly PACKAGE_NAME_REGEX = new RegExp(
     "^([@]*[a-zA-Z0-9-]+/)?[a-zA-Z0-9-]+([a-zA-Z0-9-@.])+(?<!.js)$",
   );

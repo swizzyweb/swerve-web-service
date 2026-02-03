@@ -6,7 +6,7 @@ import {
 } from "./web-service.js";
 import { WebService } from "@swizzyweb/swizzy-web-service";
 // @ts-ignore
-import { Application } from "@swizzyweb/express";
+import { Application } from "express";
 import { fileURLToPath } from "node:url";
 import path, { dirname } from "node:path";
 import { cwd } from "./utils.js";
@@ -31,7 +31,7 @@ export function getWebservice(props: any) {
   } = {};
   const nodeModulesPath = getAbsolutePath(
     props.serviceArgs.nodeModulesPath ??
-      path.join(__dirname, "../local_node_modules/node_modules/"),
+      path.join(__dirname, "../local_node_modules/"),
   );
 
   const webServices: WebService<any>[] = [];

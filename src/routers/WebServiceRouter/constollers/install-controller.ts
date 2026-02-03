@@ -14,9 +14,8 @@ import {
   WebServiceRouter,
   WebServiceRouterState,
 } from "../web-service-router.js";
-
 // @ts-ignore
-import { Request, Response, NextFunction } from "@swizzyweb/express";
+import { Request, Response, NextFunction } from "express";
 import { INpmInstaller, SaveOption } from "../../../npm-installer.js";
 import { ISwerveManager } from "@swizzyweb/swerve-manager";
 
@@ -61,7 +60,7 @@ export class InstallController extends WebController<
       try {
         const npmInstaller = getState()!.npmInstaller;
         const result = await npmInstaller.npmInstall({
-          packageName: serviceName,
+          packageName: serviceName as string,
           saveOption: SaveOption.save,
         });
         if (!result.success) {
@@ -73,7 +72,7 @@ export class InstallController extends WebController<
         res.send();
       } catch (e: any) {
         logger.error(`Error installing webservice ${serviceName} with ${e})`);
-        res.staus(400);
+        res.status(400);
         res.send();
       }
     };
