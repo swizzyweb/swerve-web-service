@@ -1,6 +1,6 @@
 {
   "name": "@swizzyweb/swerve-web-service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Template for swizzyweb backend web services",
   "main": "dist/app.js",
   "type": "module",
@@ -21,9 +21,10 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@swizzyweb/swerve-manager": "^0.3.2",
+    "@swizzyweb/express-unuse": "^1.0.2",
+    "@swizzyweb/swerve-manager": "^0.3.3",
     "@swizzyweb/swizzy-common": "^0.3.3",
-    "@swizzyweb/swizzy-web-service": "^0.6.1",
+    "@swizzyweb/swizzy-web-service": "^0.6.2",
     "express": "^5.2.1"
   }
 }

@@ -18,6 +18,8 @@ import path from "node:path";
 // @ts-ignore
 import { json, Request, Response, NextFunction } from "express";
 import {
+  getArgs,
+  getPackageJson,
   IService,
   ISwerveManager,
   SwerveConfigException,
@@ -87,12 +89,14 @@ export class RunController extends WebController<
             );
           }
         }
-
+        const { services: servicesWithServicePath } =
+          await getServicesWithServicePaths({ services, nodeModulesPath });
+        console.error(servicesWithServicePath);
         const { webServices } = await swerveManager.run({
           args: {
             port,
             appDataRoot,
-            services,
+            services: servicesWithServicePath,
             logLevel: logLevel ?? "info",
           },
         });
@@ -122,6 +126,45 @@ export class RunController extends WebController<
     };
   }
 }
+
+interface Service {
+  packageName: string;
+  servicePath?: string;
+  logLevel?: string;
+  [key: string]: string | undefined;
+}
+
+type Services = {
+  [name: string]: Service;
+};
+
+type WebServiceConfig = {
+  port: number;
+  logLevel?: string;
+  services: { [services: string]: Service }[];
+};
+
+async function getServicesWithServicePaths(props: {
+  services: Services;
+  nodeModulesPath: string;
+}): Promise<{ services: Services }> {
+  const { services, nodeModulesPath } = props;
+  const outServices: Services = {};
+  for (const [name, service] of Object.entries(services)) {
+    const { packageName } = service;
+    if (!packageName) {
+      throw new Error(`Invalid service does not have packageName`);
+    }
+    const { servicePath } =
+      getPackageJson(path.join(nodeModulesPath, "node_modules", packageName)) ??
+      {};
+    const outService = { ...service, servicePath };
+    outServices[name] = outService;
+  }
+
+  return { services: outServices };
+}
+
 export const RunControllerMiddleware: SwizzyMiddleware<RunControllerState> =
   function RunControllerMiddleware(
     props: SwizzyMiddlewareProps<RunControllerState>,

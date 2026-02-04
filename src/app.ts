@@ -31,7 +31,7 @@ export function getWebservice(props: any) {
   } = {};
   const nodeModulesPath = getAbsolutePath(
     props.serviceArgs.nodeModulesPath ??
-      path.join(__dirname, "../local_node_modules/"),
+      path.join(cwd(), "local_node_modules/"),
   );
 
   const webServices: WebService<any>[] = [];
