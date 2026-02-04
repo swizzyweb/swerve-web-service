@@ -1,5 +1,5 @@
 {
-  "name": "@swizzyweb/swerve-web-service",
+  "name": "swerve-web-service",
   "version": "0.1.6",
   "description": "Template for swizzyweb backend web services",
   "main": "dist/app.js",
